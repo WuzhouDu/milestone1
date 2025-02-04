@@ -1,3 +1,5 @@
 *.interp
 *.tokens
 *.class
+.DS_Store
+output.txt
