@@ -16,7 +16,7 @@ public class EvaluatorTest {
             // traverse(doc, 0);
 
             // write the document to XML file
-            System.out.println("Write the document to XML file:");
+            System.out.println("Write the document to XML file: output.xml");
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
