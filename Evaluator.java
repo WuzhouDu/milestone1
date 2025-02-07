@@ -17,16 +17,16 @@ public class Evaluator {
 
     // main entry
     public Document evaluate() throws Exception {
-        // Scanner scanner = new Scanner(System.in);
-        // System.out.println("Enter XPath expression:");
-        // String query = scanner.nextLine();
-        // scanner.close();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter XPath expression:");
+        String query = scanner.nextLine();
+        scanner.close();
 
         // String query = "doc(\"j_caesar.xml\")//PERSONA";
         // String query = "doc(\"j_caesar.xml\")//SCENE[SPEECH/SPEAKER/text() = \"CAESAR\"]";
         // String query = "doc(\"j_caesar.xml\")//ACT[SCENE[SPEECH/SPEAKER/text() =\"CAESAR\" and SPEECH/SPEAKER/text() = \"BRUTUS\"]]";
         // String query = "doc(\"j_caesar.xml\")//ACT[SCENE[SPEECH/SPEAKER/text() =\"CAESAR\"][SPEECH/SPEAKER/text() = \"BRUTUS\"]]";
-        String query = "doc(\"j_caesar.xml\")//ACT[not .//SPEAKER/text() = \"CAESAR\"]";
+        // String query = "doc(\"j_caesar.xml\")//ACT[not .//SPEAKER/text() = \"CAESAR\"]";
         
 
         CharStream inputStream = CharStreams.fromString(query);
