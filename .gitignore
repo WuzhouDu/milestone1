@@ -3,3 +3,5 @@
 *.class
 .DS_Store
 output.txt
+j_caesar.xml
+play.dtd

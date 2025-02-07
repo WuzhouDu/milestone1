@@ -16,9 +16,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAbsolutePathSlash(XPathParser.AbsolutePathSlashContext ctx) {
-		System.out.println("ap / : " + ctx.getText());
-	}
+	@Override public void enterAbsolutePathSlash(XPathParser.AbsolutePathSlashContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -30,9 +28,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAbsolutePathDoubleSlash(XPathParser.AbsolutePathDoubleSlashContext ctx) {
-		System.out.println("ap // : " + ctx.getText());
-	}
+	@Override public void enterAbsolutePathDoubleSlash(XPathParser.AbsolutePathDoubleSlashContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -44,9 +40,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTagName_(XPathParser.TagName_Context ctx) {
-		// System.out.println("tagname : " + ctx.getText());
-	}
+	@Override public void enterTagName_(XPathParser.TagName_Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -58,9 +52,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPathFilter(XPathParser.PathFilterContext ctx) {
-		System.out.println("path filter : " + ctx.getText());
-	}
+	@Override public void enterPathFilter(XPathParser.PathFilterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -72,9 +64,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParenthesizedRP(XPathParser.ParenthesizedRPContext ctx) {
-		System.out.println("(rp) : " + ctx.getText());
-	}
+	@Override public void enterParenthesizedRP(XPathParser.ParenthesizedRPContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -86,9 +76,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPathDoubleSlash(XPathParser.PathDoubleSlashContext ctx) {
-		System.out.println("rp // rp : " + ctx.getText());
-	}
+	@Override public void enterPathDoubleSlash(XPathParser.PathDoubleSlashContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -100,9 +88,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPathComma(XPathParser.PathCommaContext ctx) {
-		System.out.println("rp , rp : " + ctx.getText());
-	}
+	@Override public void enterPathComma(XPathParser.PathCommaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -114,9 +100,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWildcard(XPathParser.WildcardContext ctx) {
-		System.out.println("* : " + ctx.getText());
-	}
+	@Override public void enterWildcard(XPathParser.WildcardContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -128,9 +112,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParent(XPathParser.ParentContext ctx) {
-		System.out.println(".. : " + ctx.getText());
-	}
+	@Override public void enterParent(XPathParser.ParentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -142,9 +124,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAttribute(XPathParser.AttributeContext ctx) {
-		// System.out.println("'@' : " + ctx.getText());
-	}
+	@Override public void enterAttribute(XPathParser.AttributeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -156,9 +136,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterText(XPathParser.TextContext ctx) {
-		System.out.println("text() : " + ctx.getText());
-	}
+	@Override public void enterText(XPathParser.TextContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -170,9 +148,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPathSlash(XPathParser.PathSlashContext ctx) {
-		System.out.println("rp / rp : " + ctx.getText());
-	}
+	@Override public void enterPathSlash(XPathParser.PathSlashContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -184,9 +160,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCurrent(XPathParser.CurrentContext ctx) {
-		System.out.println(". : " + ctx.getText());
-	}
+	@Override public void enterCurrent(XPathParser.CurrentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -198,9 +172,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFilterEqual(XPathParser.FilterEqualContext ctx) {
-		System.out.println("filter =  : " + ctx.getText());
-	}
+	@Override public void enterFilterEqual(XPathParser.FilterEqualContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -212,9 +184,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFilterNot(XPathParser.FilterNotContext ctx) {
-		System.out.println("not f: " + ctx.getText());
-	}
+	@Override public void enterFilterNot(XPathParser.FilterNotContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -226,9 +196,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFilterOr(XPathParser.FilterOrContext ctx) {
-		System.out.println("f or f: " + ctx.getText());
-	}
+	@Override public void enterFilterOr(XPathParser.FilterOrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -240,9 +208,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFilterAnd(XPathParser.FilterAndContext ctx) {
-		System.out.println("f and f: " + ctx.getText());
-	}
+	@Override public void enterFilterAnd(XPathParser.FilterAndContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -254,9 +220,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFilterRP(XPathParser.FilterRPContext ctx) {
-		System.out.println("f rp: " + ctx.getText());
-	}
+	@Override public void enterFilterRP(XPathParser.FilterRPContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -268,9 +232,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFilterEq(XPathParser.FilterEqContext ctx) {
-		System.out.println("f eq: " + ctx.getText());
-	}
+	@Override public void enterFilterEq(XPathParser.FilterEqContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -282,9 +244,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFilterDoubleEqual(XPathParser.FilterDoubleEqualContext ctx) {
-		System.out.println("f == f: " + ctx.getText());
-	}
+	@Override public void enterFilterDoubleEqual(XPathParser.FilterDoubleEqualContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -296,9 +256,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFilterIs(XPathParser.FilterIsContext ctx) {
-		System.out.println("f is f: " + ctx.getText());
-	}
+	@Override public void enterFilterIs(XPathParser.FilterIsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -310,9 +268,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParenthesizedFilter(XPathParser.ParenthesizedFilterContext ctx) {
-		System.out.println("(f): " + ctx.getText());
-	}
+	@Override public void enterParenthesizedFilter(XPathParser.ParenthesizedFilterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -324,9 +280,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFilterStringConstant(XPathParser.FilterStringConstantContext ctx) {
-		System.out.println("string constant: " + ctx.getText());
-	}
+	@Override public void enterFilterStringConstant(XPathParser.FilterStringConstantContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -338,9 +292,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTagName(XPathParser.TagNameContext ctx) {
-		System.out.println("tagname : " + ctx.getText());
-	}
+	@Override public void enterTagName(XPathParser.TagNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -352,9 +304,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAttName(XPathParser.AttNameContext ctx) {
-		System.out.println("attname : " + ctx.getText());
-	}
+	@Override public void enterAttName(XPathParser.AttNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -367,9 +317,7 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEveryRule(ParserRuleContext ctx) {
-		// System.out.println("enter every rule: " + ctx.getText());
-	}
+	@Override public void enterEveryRule(ParserRuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
