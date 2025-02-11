@@ -1,3 +1,5 @@
+package antlr;
+
 // Generated from XPath.g4 by ANTLR 4.13.2
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -23,9 +25,8 @@ public class XPathBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
-	 * @throws Exception 
 	 */
-	@Override public T visitAbsolutePathDoubleSlash(XPathParser.AbsolutePathDoubleSlashContext ctx){ return visitChildren(ctx); }
+	@Override public T visitAbsolutePathDoubleSlash(XPathParser.AbsolutePathDoubleSlashContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

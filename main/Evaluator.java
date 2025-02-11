@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -12,15 +11,24 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import antlr.XPathCustomVisitor;
+import antlr.XPathLexer;
+import antlr.XPathParser;
+
 public class Evaluator {
-    public Evaluator() {}
+    String query;
+    String inputFileName;
+    public Evaluator(String query, String inputFileName) {
+        this.query = query;
+        this.inputFileName = inputFileName;
+    }
 
     // main entry
     public Document evaluate() throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter XPath expression:");
-        String query = scanner.nextLine();
-        scanner.close();
+        // Scanner scanner = new Scanner(System.in);
+        // System.out.println("Enter XPath expression:");
+        // String query = scanner.nextLine();
+        // scanner.close();
 
         // String query = "doc(\"j_caesar.xml\")//PERSONA";
         // String query = "doc(\"j_caesar.xml\")//SCENE[SPEECH/SPEAKER/text() = \"CAESAR\"]";
@@ -28,7 +36,6 @@ public class Evaluator {
         // String query = "doc(\"j_caesar.xml\")//ACT[SCENE[SPEECH/SPEAKER/text() =\"CAESAR\"][SPEECH/SPEAKER/text() = \"BRUTUS\"]]";
         // String query = "doc(\"j_caesar.xml\")//ACT[not .//SPEAKER/text() = \"CAESAR\"]";
         
-
         CharStream inputStream = CharStreams.fromString(query);
         XPathLexer lexer = new XPathLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -40,7 +47,7 @@ public class Evaluator {
         Element root = result.createElement("Results");
 
         // use visitor
-        XPathCustomVisitor visitor = new XPathCustomVisitor();
+        XPathCustomVisitor visitor = new XPathCustomVisitor(inputFileName);
         List<Node> resultNodes = visitor.visit(queryAST);
         // System.out.println("Result: " + resultNodes.size());
         for (Node node : resultNodes) {

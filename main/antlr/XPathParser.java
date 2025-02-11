@@ -1,3 +1,4 @@
+package antlr;
 // Generated from XPath.g4 by ANTLR 4.13.2
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -126,11 +127,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitAbsolutePathDoubleSlash(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitAbsolutePathDoubleSlash(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class AbsolutePathSlashContext extends ApContext {
@@ -150,11 +146,6 @@ public class XPathParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitAbsolutePathSlash(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitAbsolutePathSlash(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -240,11 +231,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitTagName_(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitTagName_(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class PathFilterContext extends RpContext {
@@ -263,11 +249,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitPathFilter(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitPathFilter(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ParenthesizedRPContext extends RpContext {
@@ -284,11 +265,6 @@ public class XPathParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitParenthesizedRP(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitParenthesizedRP(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -309,11 +285,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitPathDoubleSlash(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitPathDoubleSlash(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class PathCommaContext extends RpContext {
@@ -332,11 +303,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitPathComma(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitPathComma(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class WildcardContext extends RpContext {
@@ -349,11 +315,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitWildcard(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitWildcard(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ParentContext extends RpContext {
@@ -365,11 +326,6 @@ public class XPathParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitParent(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitParent(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -386,11 +342,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitAttribute(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitAttribute(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class TextContext extends RpContext {
@@ -402,11 +353,6 @@ public class XPathParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitText(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitText(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -427,11 +373,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitPathSlash(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitPathSlash(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class CurrentContext extends RpContext {
@@ -443,11 +384,6 @@ public class XPathParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitCurrent(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitCurrent(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -653,11 +589,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitFilterEqual(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitFilterEqual(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class FilterNotContext extends FContext {
@@ -672,11 +603,6 @@ public class XPathParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitFilterNot(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitFilterNot(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -696,11 +622,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitFilterOr(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitFilterOr(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class FilterAndContext extends FContext {
@@ -719,11 +640,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitFilterAnd(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitFilterAnd(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class FilterRPContext extends FContext {
@@ -738,11 +654,6 @@ public class XPathParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitFilterRP(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitFilterRP(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -762,11 +673,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitFilterEq(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitFilterEq(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class FilterDoubleEqualContext extends FContext {
@@ -784,11 +690,6 @@ public class XPathParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitFilterDoubleEqual(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitFilterDoubleEqual(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -808,11 +709,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitFilterIs(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitFilterIs(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ParenthesizedFilterContext extends FContext {
@@ -830,11 +726,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitParenthesizedFilter(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitParenthesizedFilter(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class FilterStringConstantContext extends FContext {
@@ -850,11 +741,6 @@ public class XPathParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitFilterStringConstant(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitFilterStringConstant(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1047,11 +933,6 @@ public class XPathParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitTagName(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitTagName(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final TagNameContext tagName() throws RecognitionException {
@@ -1089,11 +970,6 @@ public class XPathParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitAttName(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitAttName(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 

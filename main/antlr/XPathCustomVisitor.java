@@ -1,8 +1,8 @@
+package antlr;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 import org.w3c.dom.Document;
 import javax.xml.parsers.DocumentBuilder;
@@ -13,8 +13,13 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
+    private String fileName;
     private Document doc;
     private LinkedList<Node> tempResult = new LinkedList<>();
+
+    public XPathCustomVisitor(String fileName) {
+        this.fileName = fileName;
+    }
 
     // ap
     @Override
@@ -23,6 +28,11 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
 
         // erase the quotes
         xmlName = xmlName.substring(1, xmlName.length() - 1);
+
+        // verify file name is correct
+        if (!xmlName.equals(fileName)) {
+            throw new RuntimeException("File name is not consistent in query and argument! query: " + xmlName + ", argument: " + fileName);
+        }
 
         // load the xml file
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -86,6 +96,12 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
 
         // erase the quotes
         xmlName = xmlName.substring(1, xmlName.length() - 1);
+
+        // verify file name is correct
+        if (!xmlName.equals(fileName)) {
+            throw new RuntimeException(
+                    "File name is not consistent in query and argument! query: " + xmlName + ", argument: " + fileName);
+        }
 
         // load the xml file
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
