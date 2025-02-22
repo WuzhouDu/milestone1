@@ -44,7 +44,7 @@ public class Evaluator {
         // Trees.inspect(queryAST, parser);
 
         Document result = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-        Element root = result.createElement("Results");
+        Element root = result.createElement("Result");
 
         // use visitor
         XPathCustomVisitor visitor = new XPathCustomVisitor(inputFileName);

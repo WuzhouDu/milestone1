@@ -1,5 +1,39 @@
 grammar XPath;
 
+xq: 
+	Var
+	| STRING
+	| ap
+	| L_PAREN xq R_PAREN
+	| xq ',' xq
+	| xq SLASH rp
+	| xq DOUBLE_SLASH rp
+	| '<' tagName '>' '{' xq '}' '</' tagName '>'
+	| forClause letClause whereClause returnClause
+	| forceLetClause xq;
+
+forClause: FOR varBinding (',' varBinding)*;
+letClause: (LET letBinding (',' letBinding)*)?;
+forceLetClause: LET letBinding (',' letBinding)*;
+whereClause: (WHERE cond)?;
+returnClause: RETURN xq; 
+varBinding: Var IN xq;
+letBinding: Var ':=' xq;
+
+cond: 
+	xq '=' xq
+	| xq EQ xq
+	| xq '==' xq
+	| xq IS xq
+	| EMPTY L_PAREN xq R_PAREN
+	| SOME varInXQ (',' varInXQ)* SATISFIES cond
+	| L_PAREN cond R_PAREN
+	| cond AND cond
+	| cond OR cond
+	| NOT cond;
+
+varInXQ: Var IN xq;
+
 ap:
 	DOC L_PAREN FILENAME R_PAREN SLASH rp 		# AbsolutePathSlash
 	| DOC L_PAREN FILENAME R_PAREN DOUBLE_SLASH rp 	# AbsolutePathDoubleSlash;
@@ -33,6 +67,7 @@ f:
 
 tagName: ID;
 attName: ID;
+Var: '$' ID;
 
 DOC: 'doc';
 L_PAREN: '(';
@@ -42,4 +77,17 @@ DOUBLE_SLASH: '//';
 FILENAME: '"' [a-zA-Z0-9_-]+ '.' [a-zA-Z0-9]+ '"';
 STRING: '"' (~["\\] | '\\' .)* '"';
 ID: [a-zA-Z_] [a-zA-Z0-9_-]*;
+FOR: 'for';
+LET: 'let';
+WHERE: 'where';
+RETURN: 'return';
+IN: 'in';
+SATISFIES: 'satisfies';
+AND: 'and';
+OR: 'or';
+NOT: 'not';
+EMPTY: 'empty';
+SOME: 'some';
+EQ: 'eq';
+IS: 'is';
 WS: [ \t\r\n]+ -> skip;
