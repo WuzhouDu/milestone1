@@ -1,6 +1,6 @@
 package antlr;
-import java.util.Scanner;
 
+import java.util.Scanner;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
@@ -13,15 +13,24 @@ public class XPathParserTest {
         // System.out.println("Enter XPath expression:");
         // String input = scanner.nextLine();
         // scanner.close();
-        String input = "doc(\"j_caesar.xml\")//ACT[not .//SPEAKER/text() = \"CAESAR\"]";
+        String input = "<result>{\n" + //
+                "for $a in doc(\"j_caesar.xml\")//ACT,\n" + //
+                "    $sc in $a//SCENE,\n" + //
+                "    $sp in $sc/SPEECH\n" + //
+                "where $sp/LINE/text() = \"Et tu, Brute! Then fall, Caesar.\" \n" + //
+                "return <who>{$sp/SPEAKER/text()}</who>,\n" + //
+                "    <when>{<act>{$a/TITLE/text()}</act>, \n" + //
+                "        <scene>{$sc/TITLE/text()}</scene>}\n" + //
+                "    </when> }\n" + //
+                "</result>";
         CharStream inputStream = CharStreams.fromString(input);
-        
+
         XPathLexer lexer = new XPathLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        
+
         XPathParser parser = new XPathParser(tokens);
-        ParseTree tree = parser.ap();
-        
+        ParseTree tree = parser.xq();
+
         System.out.println("Parse Tree:");
         // System.out.println(tree.toStringTree(parser));
         Trees.inspect(tree, parser);
