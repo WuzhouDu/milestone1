@@ -1,4 +1,5 @@
 package antlr;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
@@ -31,7 +32,8 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
 
         // verify file name is correct
         if (!xmlName.equals(fileName)) {
-            throw new RuntimeException("File name is not consistent in query and argument! query: " + xmlName + ", argument: " + fileName);
+            throw new RuntimeException(
+                    "File name is not consistent in query and argument! query: " + xmlName + ", argument: " + fileName);
         }
 
         // load the xml file
@@ -60,7 +62,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
                         for (int i = 0; i < childCount; i++) {
                             Node child = node.getChildNodes().item(i);
                             // System.out.println(node.hashCode());
-                                // System.out.println(node.hashCode());
+                            // System.out.println(node.hashCode());
                             children.add(child);
                         }
                     }
@@ -261,7 +263,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
                 for (int i = 0; i < childCount; i++) {
                     Node child = node.getChildNodes().item(i);
                     // System.out.println(node.hashCode());
-                        // System.out.println(node.hashCode());
+                    // System.out.println(node.hashCode());
                     children.add(child);
                 }
             }
@@ -518,7 +520,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         // System.out.println("not filter");
         LinkedList<Node> notResult = visit(ctx.f());
         // for (Node node : notResult) {
-        //     System.out.println(node.getNodeName());
+        // System.out.println(node.getNodeName());
         // }
         snapShot.removeAll(notResult);
         tempResult = snapShot;
@@ -527,23 +529,23 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
 
     // helper function
     // private LinkedList<Node> getAllDescendants(LinkedList<Node> nodes) {
-    //     if (nodes.size() == 0) {
-    //         return new LinkedList<>();
-    //     }
+    // if (nodes.size() == 0) {
+    // return new LinkedList<>();
+    // }
 
-    //     // get descendants by level
-    //     LinkedList<Node> descendants = new LinkedList<>();
-    //     LinkedList<Node> children = new LinkedList<>();
-    //     for (Node node : nodes) {
-    //         descendants.add(node);
-    //         if (node.hasChildNodes()) {
-    //             int childCount = node.getChildNodes().getLength();
-    //             for (int i = 0; i < childCount; i++) {
-    //                 children.add(node.getChildNodes().item(i));
-    //             }
-    //         }
-    //     }
-    //     descendants.addAll(getAllDescendants(children));
-    //     return descendants;
+    // // get descendants by level
+    // LinkedList<Node> descendants = new LinkedList<>();
+    // LinkedList<Node> children = new LinkedList<>();
+    // for (Node node : nodes) {
+    // descendants.add(node);
+    // if (node.hasChildNodes()) {
+    // int childCount = node.getChildNodes().getLength();
+    // for (int i = 0; i < childCount; i++) {
+    // children.add(node.getChildNodes().item(i));
+    // }
+    // }
+    // }
+    // descendants.addAll(getAllDescendants(children));
+    // return descendants;
     // }
 }

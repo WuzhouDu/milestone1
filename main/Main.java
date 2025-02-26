@@ -26,9 +26,19 @@ public class Main {
         File queryFile = new File(queryFileName);
         Scanner scanner;
         try {
-            scanner = new Scanner(queryFile);
-            String query = scanner.nextLine();
-            scanner.close();
+            // scanner = new Scanner(queryFile);
+            // String query = scanner.nextLine();
+            // scanner.close();
+            String query = "<result>{\n" + //
+                                "for $a in document(\"j_caesar.xml\")//ACT,\n" + //
+                                "    $sc in $a//SCENE,\n" + //
+                                "    $sp in $sc/SPEECH\n" + //
+                                "where $sp/LINE/text() = \"Et tu, Brute! Then fall, Caesar.\" \n" + //
+                                "return <who>{$sp/SPEAKER/text()}</who>,\n" + //
+                                "    <when>{<act>{$a/TITLE/text()}</act>, \n" + //
+                                "        <scene>{$sc/TITLE/text()}</scene>}\n" + //
+                                "    </when> }\n" + //
+                                "</result>";
             Evaluator evaluator = new Evaluator(query, inputFileName);
             Document doc = evaluator.evaluate();
             // write the document to XML file

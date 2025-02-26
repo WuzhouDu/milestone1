@@ -40,8 +40,8 @@ public class XPathParser extends Parser {
 			null, "','", "'<'", "'>'", "'{'", "'}'", "'</'", "':='", "'='", "'=='", 
 			"'*'", "'.'", "'..'", "'text()'", "'@'", "'['", "']'", null, "'for'", 
 			"'let'", "'where'", "'return'", "'in'", "'satisfies'", "'and'", "'or'", 
-			"'not'", "'empty'", "'some'", "'eq'", "'is'", "'doc'", "'('", "')'", 
-			"'/'", "'//'"
+			"'not'", "'empty'", "'some'", "'eq'", "'is'", null, "'('", "')'", "'/'", 
+			"'//'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();

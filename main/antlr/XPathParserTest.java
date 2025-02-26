@@ -14,7 +14,7 @@ public class XPathParserTest {
         // String input = scanner.nextLine();
         // scanner.close();
         String input = "<result>{\n" + //
-                "for $a in doc(\"j_caesar.xml\")//ACT,\n" + //
+                "for $a in document(\"j_caesar.xml\")//ACT,\n" + //
                 "    $sc in $a//SCENE,\n" + //
                 "    $sp in $sc/SPEECH\n" + //
                 "where $sp/LINE/text() = \"Et tu, Brute! Then fall, Caesar.\" \n" + //
