@@ -31,7 +31,8 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
     @Override
     public LinkedList<Node> visitXqVar(XPathParser.XqVarContext ctx) {
         String var = ctx.Var().getText();
-        return context.get(var);
+        LinkedList<Node> result = context.get(var);
+        return result;
     }
 
     @Override
@@ -75,7 +76,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         context = snapShot;
         tempResult = result;
         visit(ctx.rp());
-        
+
         // eliminate the repeated nodes
         tempResult = new LinkedList<>(new HashSet<>(tempResult));
         return tempResult;
@@ -86,16 +87,15 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
         LinkedList<Node> result = visit(ctx.xq());
         tempResult = new LinkedList<>(new HashSet<>(result));
+        result = new LinkedList<>();
         context = snapShot;
         LinkedList<Node> queue = tempResult;
         while (!queue.isEmpty()) {
-            // System.out.println("1");
             visit(ctx.rp());
             result.addAll(tempResult);
             result = new LinkedList<>(new HashSet<>(result));
             LinkedList<Node> children = new LinkedList<>();
             for (Node node : queue) {
-                // System.out.println(node.hashCode());
                 int childCount = node.getChildNodes().getLength();
                 for (int i = 0; i < childCount; i++) {
                     Node child = node.getChildNodes().item(i);
@@ -117,9 +117,9 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         LinkedList<Node> result = new LinkedList<>();
         Node resultNode = doc.createElement(ctx.tagName(0).getText());
         for (Node child : children) {
-            // deep copy the child and append to the result node
-            Node copy = child.cloneNode(true);
-            resultNode.appendChild(copy);
+            // deep copy the child and import to the result node
+            Node importedNode = resultNode.getOwnerDocument().importNode(child, true);
+            resultNode.appendChild(importedNode);
         }
         result.add(resultNode);
         return result;
@@ -148,11 +148,11 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         // for clause
         LinkedList<HashMap<String, LinkedList<Node>>> forClauseRes = new LinkedList<HashMap<String, LinkedList<Node>>>();
         visitforClauseList(ctx.forClause().varBinding(), 0, forClauseRes);
-    
+
         for (HashMap<String, LinkedList<Node>> tempContext : forClauseRes) {
             context = tempContext;
             // let clause
-            if (ctx.letClause() != null) {            
+            if (ctx.letClause() != null) {
                 for (int i = 0; i < ctx.letClause().letBinding().size(); i++) {
                     String var = ctx.letClause().letBinding(i).Var().getText();
                     HashMap<String, LinkedList<Node>> temp = new HashMap<>(context);
@@ -163,17 +163,21 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
             }
             // where clause
             HashMap<String, LinkedList<Node>> snapShotWhere = new HashMap<>(context);
-
-            Boolean whereResSnapShot = curCondRes;
-            visit(ctx.whereClause().cond());
-            context = snapShotWhere;
-            if (curCondRes) {
+            if (ctx.whereClause().cond() != null) {
+                visit(ctx.whereClause().cond());
+                context = snapShotWhere;
+                if (curCondRes) {
+                    // return clause
+                    HashMap<String, LinkedList<Node>> snapShotReturn = new HashMap<>(context);
+                    result.addAll(visit(ctx.returnClause().xq()));
+                    context = snapShotReturn;
+                }
+            } else {
                 // return clause
                 HashMap<String, LinkedList<Node>> snapShotReturn = new HashMap<>(context);
                 result.addAll(visit(ctx.returnClause().xq()));
                 context = snapShotReturn;
             }
-            curCondRes = whereResSnapShot;
         }
         context = snapShot;
         return result;
@@ -201,8 +205,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         }
         if (isEqual) {
             curCondRes = true;
-        }
-        else {
+        } else {
             curCondRes = false;
         }
         return new LinkedList<>();
@@ -415,17 +418,13 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
                 LinkedList<Node> queue = new LinkedList<>(tempResult);
 
                 while (!queue.isEmpty()) {
-                    // System.out.println("1");
                     visit(ctx.rp());
                     result.addAll(tempResult);
                     LinkedList<Node> children = new LinkedList<>();
                     for (Node node : queue) {
-                        // System.out.println(node.hashCode());
                         int childCount = node.getChildNodes().getLength();
                         for (int i = 0; i < childCount; i++) {
                             Node child = node.getChildNodes().item(i);
-                            // System.out.println(node.hashCode());
-                            // System.out.println(node.hashCode());
                             children.add(child);
                         }
                     }
@@ -503,18 +502,14 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
     public LinkedList<Node> visitTagName_(XPathParser.TagName_Context ctx) {
         String tagString = ctx.getText();
 
-        // System.out.println("tagname: " + tagString);
-
         // filter children nodes
         LinkedList<Node> result = new LinkedList<>();
         for (Node node : tempResult) {
-            // System.out.println("element node: " + node.getNodeName());
             int childCount = node.getChildNodes().getLength();
             for (int i = 0; i < childCount; i++) {
                 Node child = node.getChildNodes().item(i);
                 if (child.getNodeType() == Node.ELEMENT_NODE && child.getNodeName().equals(tagString)) {
                     result.add(child);
-                    // System.out.println(child.getTextContent());
                 }
             }
         }
@@ -561,11 +556,9 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
     public LinkedList<Node> visitText(XPathParser.TextContext ctx) {
         LinkedList<Node> result = new LinkedList<>();
         for (Node node : tempResult) {
-            // System.out.println("text node ?: " + node.getNodeName());
             for (int i = 0; i < node.getChildNodes().getLength(); i++) {
                 Node child = node.getChildNodes().item(i);
                 if (child.getNodeType() == Node.TEXT_NODE) {
-                    // System.out.println("text node !: " + child.getTextContent());
                     result.add(child);
                 }
             }
@@ -614,20 +607,15 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         // use bfs to get results
         LinkedList<Node> result = new LinkedList<>();
         LinkedList<Node> queue = new LinkedList<>(new HashSet<>(tempResult));
-        // System.out.println("1");
         while (!queue.isEmpty()) {
-            // System.out.println("1");
             visit(ctx.rp(1));
             result.addAll(tempResult);
             result = new LinkedList<>(new HashSet<>(result));
             LinkedList<Node> children = new LinkedList<>();
             for (Node node : queue) {
-                // System.out.println(node.hashCode());
                 int childCount = node.getChildNodes().getLength();
                 for (int i = 0; i < childCount; i++) {
                     Node child = node.getChildNodes().item(i);
-                    // System.out.println(node.hashCode());
-                    // System.out.println(node.hashCode());
                     children.add(child);
                 }
             }
@@ -641,11 +629,6 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
     @Override
     public LinkedList<Node> visitPathFilter(XPathParser.PathFilterContext ctx) {
         visit(ctx.rp());
-        // System.out.println("path filter");
-
-        // for (Node node : tempResult) {
-        // System.out.println(node.getNodeName());
-        // }
         visit(ctx.f());
         return tempResult;
     }
@@ -829,7 +812,6 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
     public LinkedList<Node> visitFilterStringConstant(XPathParser.FilterStringConstantContext ctx) {
         String stringConstant = ctx.STRING().getText();
         stringConstant = stringConstant.substring(1, stringConstant.length() - 1);
-        // System.out.println("string constant: " + stringConstant);
 
         LinkedList<Node> result = new LinkedList<>();
         LinkedList<Node> snapShot = new LinkedList<>(tempResult);
@@ -881,11 +863,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
     @Override
     public LinkedList<Node> visitFilterNot(XPathParser.FilterNotContext ctx) {
         LinkedList<Node> snapShot = new LinkedList<>(tempResult);
-        // System.out.println("not filter");
         LinkedList<Node> notResult = visit(ctx.f());
-        // for (Node node : notResult) {
-        // System.out.println(node.getNodeName());
-        // }
         snapShot.removeAll(notResult);
         tempResult = snapShot;
         return tempResult;
@@ -894,7 +872,8 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
     // helper function
 
     // dive into the forclause, use backtracking to get all the results
-    private void visitforClauseList(List<XPathParser.VarBindingContext> varBindings, int index, LinkedList<HashMap<String, LinkedList<Node>>> result) {
+    private void visitforClauseList(List<XPathParser.VarBindingContext> varBindings, int index,
+            LinkedList<HashMap<String, LinkedList<Node>>> result) {
         if (index == varBindings.size()) {
             result.add(new HashMap<>(context));
             return;
@@ -934,5 +913,5 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         }
         context = snapShot;
     }
-    
+
 }

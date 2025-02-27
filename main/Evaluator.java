@@ -40,11 +40,11 @@ public class Evaluator {
         XPathLexer lexer = new XPathLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         XPathParser parser = new XPathParser(tokens);
-        ParseTree queryAST = parser.ap();
+        ParseTree queryAST = parser.xq();
         // Trees.inspect(queryAST, parser);
 
         Document result = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-        Element root = result.createElement("Results");
+        Element root = result.createElement("RESULT");
 
         // use visitor
         XPathCustomVisitor visitor = new XPathCustomVisitor(inputFileName);
