@@ -1,4 +1,4 @@
-// Generated from XPath.g4 by ANTLR 4.13.
+// Generated from XPath.g4 by ANTLR 4.13.2
 package antlr;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
@@ -9,18 +9,164 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface XPathListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link XPathParser#xq}.
+	 * Enter a parse tree produced by the {@code XqComma}
+	 * labeled alternative in {@link XPathParser#xq}.
 	 * 
 	 * @param ctx the parse tree
 	 */
-	void enterXq(XPathParser.XqContext ctx);
+	void enterXqComma(XPathParser.XqCommaContext ctx);
 
 	/**
-	 * Exit a parse tree produced by {@link XPathParser#xq}.
+	 * Exit a parse tree produced by the {@code XqComma}
+	 * labeled alternative in {@link XPathParser#xq}.
 	 * 
 	 * @param ctx the parse tree
 	 */
-	void exitXq(XPathParser.XqContext ctx);
+	void exitXqComma(XPathParser.XqCommaContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code XqAp}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterXqAp(XPathParser.XqApContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code XqAp}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitXqAp(XPathParser.XqApContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code XqVar}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterXqVar(XPathParser.XqVarContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code XqVar}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitXqVar(XPathParser.XqVarContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code XqDoubleSlash}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterXqDoubleSlash(XPathParser.XqDoubleSlashContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code XqDoubleSlash}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitXqDoubleSlash(XPathParser.XqDoubleSlashContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code XqSlash}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterXqSlash(XPathParser.XqSlashContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code XqSlash}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitXqSlash(XPathParser.XqSlashContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code XqFLWR}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterXqFLWR(XPathParser.XqFLWRContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code XqFLWR}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitXqFLWR(XPathParser.XqFLWRContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code XqString}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterXqString(XPathParser.XqStringContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code XqString}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitXqString(XPathParser.XqStringContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code XqTag}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterXqTag(XPathParser.XqTagContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code XqTag}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitXqTag(XPathParser.XqTagContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code XqForceLet}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterXqForceLet(XPathParser.XqForceLetContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code XqForceLet}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitXqForceLet(XPathParser.XqForceLetContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code XqParenthesized}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterXqParenthesized(XPathParser.XqParenthesizedContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code XqParenthesized}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitXqParenthesized(XPathParser.XqParenthesizedContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link XPathParser#forClause}.
@@ -121,18 +267,164 @@ public interface XPathListener extends ParseTreeListener {
 	void exitLetBinding(XPathParser.LetBindingContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link XPathParser#cond}.
+	 * Enter a parse tree produced by the {@code condEmpty}
+	 * labeled alternative in {@link XPathParser#cond}.
 	 * 
 	 * @param ctx the parse tree
 	 */
-	void enterCond(XPathParser.CondContext ctx);
+	void enterCondEmpty(XPathParser.CondEmptyContext ctx);
 
 	/**
-	 * Exit a parse tree produced by {@link XPathParser#cond}.
+	 * Exit a parse tree produced by the {@code condEmpty}
+	 * labeled alternative in {@link XPathParser#cond}.
 	 * 
 	 * @param ctx the parse tree
 	 */
-	void exitCond(XPathParser.CondContext ctx);
+	void exitCondEmpty(XPathParser.CondEmptyContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code condEQ}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterCondEQ(XPathParser.CondEQContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code condEQ}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitCondEQ(XPathParser.CondEQContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code condDoubleEqual}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterCondDoubleEqual(XPathParser.CondDoubleEqualContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code condDoubleEqual}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitCondDoubleEqual(XPathParser.CondDoubleEqualContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code condIs}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterCondIs(XPathParser.CondIsContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code condIs}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitCondIs(XPathParser.CondIsContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code condSome}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterCondSome(XPathParser.CondSomeContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code condSome}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitCondSome(XPathParser.CondSomeContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code condEqSign}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterCondEqSign(XPathParser.CondEqSignContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code condEqSign}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitCondEqSign(XPathParser.CondEqSignContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code condAND}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterCondAND(XPathParser.CondANDContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code condAND}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitCondAND(XPathParser.CondANDContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code condOR}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterCondOR(XPathParser.CondORContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code condOR}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitCondOR(XPathParser.CondORContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code condNOT}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterCondNOT(XPathParser.CondNOTContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code condNOT}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitCondNOT(XPathParser.CondNOTContext ctx);
+
+	/**
+	 * Enter a parse tree produced by the {@code condParenthesized}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void enterCondParenthesized(XPathParser.CondParenthesizedContext ctx);
+
+	/**
+	 * Exit a parse tree produced by the {@code condParenthesized}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 */
+	void exitCondParenthesized(XPathParser.CondParenthesizedContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link XPathParser#varInXQ}.

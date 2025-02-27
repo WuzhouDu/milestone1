@@ -107,27 +107,62 @@ public class XPathParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class XqContext extends ParserRuleContext {
-		public TagNameContext open;
-		public TagNameContext close;
-		public TerminalNode Var() { return getToken(XPathParser.Var, 0); }
-		public TerminalNode STRING() { return getToken(XPathParser.STRING, 0); }
-		public ApContext ap() {
-			return getRuleContext(ApContext.class,0);
+		public XqContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
 		}
-		public TerminalNode L_PAREN() { return getToken(XPathParser.L_PAREN, 0); }
+		@Override public int getRuleIndex() { return RULE_xq; }
+	 
+		public XqContext() { }
+		public void copyFrom(XqContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class XqCommaContext extends XqContext {
 		public List<XqContext> xq() {
 			return getRuleContexts(XqContext.class);
 		}
 		public XqContext xq(int i) {
 			return getRuleContext(XqContext.class,i);
 		}
-		public TerminalNode R_PAREN() { return getToken(XPathParser.R_PAREN, 0); }
-		public List<TagNameContext> tagName() {
-			return getRuleContexts(TagNameContext.class);
+		public XqCommaContext(XqContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class XqApContext extends XqContext {
+		public ApContext ap() {
+			return getRuleContext(ApContext.class,0);
 		}
-		public TagNameContext tagName(int i) {
-			return getRuleContext(TagNameContext.class,i);
+		public XqApContext(XqContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class XqVarContext extends XqContext {
+		public TerminalNode Var() { return getToken(XPathParser.Var, 0); }
+		public XqVarContext(XqContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class XqDoubleSlashContext extends XqContext {
+		public XqContext xq() {
+			return getRuleContext(XqContext.class,0);
 		}
+		public TerminalNode DOUBLE_SLASH() { return getToken(XPathParser.DOUBLE_SLASH, 0); }
+		public RpContext rp() {
+			return getRuleContext(RpContext.class,0);
+		}
+		public XqDoubleSlashContext(XqContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class XqSlashContext extends XqContext {
+		public XqContext xq() {
+			return getRuleContext(XqContext.class,0);
+		}
+		public TerminalNode SLASH() { return getToken(XPathParser.SLASH, 0); }
+		public RpContext rp() {
+			return getRuleContext(RpContext.class,0);
+		}
+		public XqSlashContext(XqContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class XqFLWRContext extends XqContext {
 		public ForClauseContext forClause() {
 			return getRuleContext(ForClauseContext.class,0);
 		}
@@ -140,18 +175,46 @@ public class XPathParser extends Parser {
 		public ReturnClauseContext returnClause() {
 			return getRuleContext(ReturnClauseContext.class,0);
 		}
+		public XqFLWRContext(XqContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class XqStringContext extends XqContext {
+		public TerminalNode STRING() { return getToken(XPathParser.STRING, 0); }
+		public XqStringContext(XqContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class XqTagContext extends XqContext {
+		public TagNameContext open;
+		public TagNameContext close;
+		public XqContext xq() {
+			return getRuleContext(XqContext.class,0);
+		}
+		public List<TagNameContext> tagName() {
+			return getRuleContexts(TagNameContext.class);
+		}
+		public TagNameContext tagName(int i) {
+			return getRuleContext(TagNameContext.class,i);
+		}
+		public XqTagContext(XqContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class XqForceLetContext extends XqContext {
 		public ForceLetClauseContext forceLetClause() {
 			return getRuleContext(ForceLetClauseContext.class,0);
 		}
-		public TerminalNode SLASH() { return getToken(XPathParser.SLASH, 0); }
-		public RpContext rp() {
-			return getRuleContext(RpContext.class,0);
+		public XqContext xq() {
+			return getRuleContext(XqContext.class,0);
 		}
-		public TerminalNode DOUBLE_SLASH() { return getToken(XPathParser.DOUBLE_SLASH, 0); }
-		public XqContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
+		public XqForceLetContext(XqContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class XqParenthesizedContext extends XqContext {
+		public TerminalNode L_PAREN() { return getToken(XPathParser.L_PAREN, 0); }
+		public XqContext xq() {
+			return getRuleContext(XqContext.class,0);
 		}
-		@Override public int getRuleIndex() { return RULE_xq; }
+		public TerminalNode R_PAREN() { return getToken(XPathParser.R_PAREN, 0); }
+		public XqParenthesizedContext(XqContext ctx) { copyFrom(ctx); }
 	}
 
 	public final XqContext xq() throws RecognitionException {
@@ -174,24 +237,37 @@ public class XPathParser extends Parser {
 			switch (_input.LA(1)) {
 			case Var:
 				{
+				_localctx = new XqVarContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
 				setState(31);
 				match(Var);
 				}
 				break;
 			case STRING:
 				{
+				_localctx = new XqStringContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(32);
 				match(STRING);
 				}
 				break;
 			case DOC:
 				{
+				_localctx = new XqApContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(33);
 				ap();
 				}
 				break;
 			case L_PAREN:
 				{
+				_localctx = new XqParenthesizedContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(34);
 				match(L_PAREN);
 				setState(35);
@@ -202,10 +278,13 @@ public class XPathParser extends Parser {
 				break;
 			case T__1:
 				{
+				_localctx = new XqTagContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(38);
 				match(T__1);
 				setState(39);
-				((XqContext)_localctx).open = tagName();
+				((XqTagContext)_localctx).open = tagName();
 				setState(40);
 				match(T__2);
 				setState(41);
@@ -217,15 +296,18 @@ public class XPathParser extends Parser {
 				setState(44);
 				match(T__5);
 				setState(45);
-				((XqContext)_localctx).close = tagName();
+				((XqTagContext)_localctx).close = tagName();
 				setState(46);
 				match(T__2);
 				setState(47);
-				if (!( (((XqContext)_localctx).open!=null?_input.getText(((XqContext)_localctx).open.start,((XqContext)_localctx).open.stop):null).equals((((XqContext)_localctx).close!=null?_input.getText(((XqContext)_localctx).close.start,((XqContext)_localctx).close.stop):null)) )) throw new FailedPredicateException(this, " $open.text.equals($close.text) ");
+				if (!( (((XqTagContext)_localctx).open!=null?_input.getText(((XqTagContext)_localctx).open.start,((XqTagContext)_localctx).open.stop):null).equals((((XqTagContext)_localctx).close!=null?_input.getText(((XqTagContext)_localctx).close.start,((XqTagContext)_localctx).close.stop):null)) )) throw new FailedPredicateException(this, " $open.text.equals($close.text) ");
 				}
 				break;
 			case FOR:
 				{
+				_localctx = new XqFLWRContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(49);
 				forClause();
 				setState(50);
@@ -238,6 +320,9 @@ public class XPathParser extends Parser {
 				break;
 			case LET:
 				{
+				_localctx = new XqForceLetContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(54);
 				forceLetClause();
 				setState(55);
@@ -261,7 +346,7 @@ public class XPathParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 					case 1:
 						{
-						_localctx = new XqContext(_parentctx, _parentState);
+						_localctx = new XqCommaContext(new XqContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_xq);
 						setState(59);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
@@ -273,7 +358,7 @@ public class XPathParser extends Parser {
 						break;
 					case 2:
 						{
-						_localctx = new XqContext(_parentctx, _parentState);
+						_localctx = new XqSlashContext(new XqContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_xq);
 						setState(62);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
@@ -285,7 +370,7 @@ public class XPathParser extends Parser {
 						break;
 					case 3:
 						{
-						_localctx = new XqContext(_parentctx, _parentState);
+						_localctx = new XqDoubleSlashContext(new XqContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_xq);
 						setState(65);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
@@ -644,6 +729,28 @@ public class XPathParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class CondContext extends ParserRuleContext {
+		public CondContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_cond; }
+	 
+		public CondContext() { }
+		public void copyFrom(CondContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CondEmptyContext extends CondContext {
+		public TerminalNode EMPTY() { return getToken(XPathParser.EMPTY, 0); }
+		public TerminalNode L_PAREN() { return getToken(XPathParser.L_PAREN, 0); }
+		public XqContext xq() {
+			return getRuleContext(XqContext.class,0);
+		}
+		public TerminalNode R_PAREN() { return getToken(XPathParser.R_PAREN, 0); }
+		public CondEmptyContext(CondContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CondEQContext extends CondContext {
 		public List<XqContext> xq() {
 			return getRuleContexts(XqContext.class);
 		}
@@ -651,10 +758,31 @@ public class XPathParser extends Parser {
 			return getRuleContext(XqContext.class,i);
 		}
 		public TerminalNode EQ() { return getToken(XPathParser.EQ, 0); }
+		public CondEQContext(CondContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CondDoubleEqualContext extends CondContext {
+		public List<XqContext> xq() {
+			return getRuleContexts(XqContext.class);
+		}
+		public XqContext xq(int i) {
+			return getRuleContext(XqContext.class,i);
+		}
+		public CondDoubleEqualContext(CondContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CondIsContext extends CondContext {
+		public List<XqContext> xq() {
+			return getRuleContexts(XqContext.class);
+		}
+		public XqContext xq(int i) {
+			return getRuleContext(XqContext.class,i);
+		}
 		public TerminalNode IS() { return getToken(XPathParser.IS, 0); }
-		public TerminalNode EMPTY() { return getToken(XPathParser.EMPTY, 0); }
-		public TerminalNode L_PAREN() { return getToken(XPathParser.L_PAREN, 0); }
-		public TerminalNode R_PAREN() { return getToken(XPathParser.R_PAREN, 0); }
+		public CondIsContext(CondContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CondSomeContext extends CondContext {
 		public TerminalNode SOME() { return getToken(XPathParser.SOME, 0); }
 		public List<VarInXQContext> varInXQ() {
 			return getRuleContexts(VarInXQContext.class);
@@ -663,19 +791,59 @@ public class XPathParser extends Parser {
 			return getRuleContext(VarInXQContext.class,i);
 		}
 		public TerminalNode SATISFIES() { return getToken(XPathParser.SATISFIES, 0); }
+		public CondContext cond() {
+			return getRuleContext(CondContext.class,0);
+		}
+		public CondSomeContext(CondContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CondEqSignContext extends CondContext {
+		public List<XqContext> xq() {
+			return getRuleContexts(XqContext.class);
+		}
+		public XqContext xq(int i) {
+			return getRuleContext(XqContext.class,i);
+		}
+		public CondEqSignContext(CondContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CondANDContext extends CondContext {
 		public List<CondContext> cond() {
 			return getRuleContexts(CondContext.class);
 		}
 		public CondContext cond(int i) {
 			return getRuleContext(CondContext.class,i);
 		}
-		public TerminalNode NOT() { return getToken(XPathParser.NOT, 0); }
 		public TerminalNode AND() { return getToken(XPathParser.AND, 0); }
-		public TerminalNode OR() { return getToken(XPathParser.OR, 0); }
-		public CondContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
+		public CondANDContext(CondContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CondORContext extends CondContext {
+		public List<CondContext> cond() {
+			return getRuleContexts(CondContext.class);
 		}
-		@Override public int getRuleIndex() { return RULE_cond; }
+		public CondContext cond(int i) {
+			return getRuleContext(CondContext.class,i);
+		}
+		public TerminalNode OR() { return getToken(XPathParser.OR, 0); }
+		public CondORContext(CondContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CondNOTContext extends CondContext {
+		public TerminalNode NOT() { return getToken(XPathParser.NOT, 0); }
+		public CondContext cond() {
+			return getRuleContext(CondContext.class,0);
+		}
+		public CondNOTContext(CondContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CondParenthesizedContext extends CondContext {
+		public TerminalNode L_PAREN() { return getToken(XPathParser.L_PAREN, 0); }
+		public CondContext cond() {
+			return getRuleContext(CondContext.class,0);
+		}
+		public TerminalNode R_PAREN() { return getToken(XPathParser.R_PAREN, 0); }
+		public CondParenthesizedContext(CondContext ctx) { copyFrom(ctx); }
 	}
 
 	public final CondContext cond() throws RecognitionException {
@@ -699,6 +867,10 @@ public class XPathParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				{
+				_localctx = new CondEqSignContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
 				setState(118);
 				xq(0);
 				setState(119);
@@ -709,6 +881,9 @@ public class XPathParser extends Parser {
 				break;
 			case 2:
 				{
+				_localctx = new CondEQContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(122);
 				xq(0);
 				setState(123);
@@ -719,6 +894,9 @@ public class XPathParser extends Parser {
 				break;
 			case 3:
 				{
+				_localctx = new CondDoubleEqualContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(126);
 				xq(0);
 				setState(127);
@@ -729,6 +907,9 @@ public class XPathParser extends Parser {
 				break;
 			case 4:
 				{
+				_localctx = new CondIsContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(130);
 				xq(0);
 				setState(131);
@@ -739,6 +920,9 @@ public class XPathParser extends Parser {
 				break;
 			case 5:
 				{
+				_localctx = new CondEmptyContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(134);
 				match(EMPTY);
 				setState(135);
@@ -751,6 +935,9 @@ public class XPathParser extends Parser {
 				break;
 			case 6:
 				{
+				_localctx = new CondSomeContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(139);
 				match(SOME);
 				setState(140);
@@ -779,6 +966,9 @@ public class XPathParser extends Parser {
 				break;
 			case 7:
 				{
+				_localctx = new CondParenthesizedContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(151);
 				match(L_PAREN);
 				setState(152);
@@ -789,6 +979,9 @@ public class XPathParser extends Parser {
 				break;
 			case 8:
 				{
+				_localctx = new CondNOTContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(155);
 				match(NOT);
 				setState(156);
@@ -810,7 +1003,7 @@ public class XPathParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 					case 1:
 						{
-						_localctx = new CondContext(_parentctx, _parentState);
+						_localctx = new CondANDContext(new CondContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_cond);
 						setState(159);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
@@ -822,7 +1015,7 @@ public class XPathParser extends Parser {
 						break;
 					case 2:
 						{
-						_localctx = new CondContext(_parentctx, _parentState);
+						_localctx = new CondORContext(new CondContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_cond);
 						setState(162);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
@@ -1609,7 +1802,7 @@ public class XPathParser extends Parser {
 	private boolean xq_sempred(XqContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return  (((XqContext)_localctx).open!=null?_input.getText(((XqContext)_localctx).open.start,((XqContext)_localctx).open.stop):null).equals((((XqContext)_localctx).close!=null?_input.getText(((XqContext)_localctx).close.start,((XqContext)_localctx).close.stop):null)) ;
+			return  (((XqTagContext)_localctx).open!=null?_input.getText(((XqTagContext)_localctx).open.start,((XqTagContext)_localctx).open.stop):null).equals((((XqTagContext)_localctx).close!=null?_input.getText(((XqTagContext)_localctx).close.start,((XqTagContext)_localctx).close.stop):null)) ;
 		case 1:
 			return precpred(_ctx, 6);
 		case 2:

@@ -2,8 +2,10 @@ package antlr;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.w3c.dom.Document;
 import javax.xml.parsers.DocumentBuilder;
@@ -17,9 +19,369 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
     private String fileName;
     private Document doc;
     private LinkedList<Node> tempResult = new LinkedList<>();
+    private Boolean curCondRes = false;
+    // context
+    private HashMap<String, LinkedList<Node>> context = new HashMap<>();
 
     public XPathCustomVisitor(String fileName) {
         this.fileName = fileName;
+    }
+
+    // xq
+    @Override
+    public LinkedList<Node> visitXqVar(XPathParser.XqVarContext ctx) {
+        String var = ctx.Var().getText();
+        return context.get(var);
+    }
+
+    @Override
+    public LinkedList<Node> visitXqString(XPathParser.XqStringContext ctx) {
+        LinkedList<Node> result = new LinkedList<>();
+        String string = ctx.STRING().getText();
+        string = string.substring(1, string.length() - 1);
+        result.add(doc.createTextNode(string));
+        return result;
+    }
+
+    @Override
+    public LinkedList<Node> visitXqAp(XPathParser.XqApContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        LinkedList<Node> res = visit(ctx.ap());
+        context = snapShot;
+        return res;
+    }
+
+    @Override
+    public LinkedList<Node> visitXqParenthesized(XPathParser.XqParenthesizedContext ctx) {
+        LinkedList<Node> res = visit(ctx.xq());
+        return res;
+    }
+
+    @Override
+    public LinkedList<Node> visitXqComma(XPathParser.XqCommaContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        LinkedList<Node> result1 = visit(ctx.xq(0));
+        context = snapShot;
+        LinkedList<Node> result2 = visit(ctx.xq(1));
+        context = snapShot;
+        result1.addAll(result2);
+        return result1;
+    }
+
+    @Override
+    public LinkedList<Node> visitXqSlash(XPathParser.XqSlashContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        LinkedList<Node> result = visit(ctx.xq());
+        context = snapShot;
+        tempResult = result;
+        visit(ctx.rp());
+        
+        // eliminate the repeated nodes
+        tempResult = new LinkedList<>(new HashSet<>(tempResult));
+        return tempResult;
+    }
+
+    @Override
+    public LinkedList<Node> visitXqDoubleSlash(XPathParser.XqDoubleSlashContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        LinkedList<Node> result = visit(ctx.xq());
+        tempResult = new LinkedList<>(new HashSet<>(result));
+        context = snapShot;
+        LinkedList<Node> queue = tempResult;
+        while (!queue.isEmpty()) {
+            // System.out.println("1");
+            visit(ctx.rp());
+            result.addAll(tempResult);
+            result = new LinkedList<>(new HashSet<>(result));
+            LinkedList<Node> children = new LinkedList<>();
+            for (Node node : queue) {
+                // System.out.println(node.hashCode());
+                int childCount = node.getChildNodes().getLength();
+                for (int i = 0; i < childCount; i++) {
+                    Node child = node.getChildNodes().item(i);
+                    children.add(child);
+                }
+            }
+            queue = children;
+            tempResult = queue;
+        }
+        tempResult = result;
+        return tempResult;
+    }
+
+    @Override
+    public LinkedList<Node> visitXqTag(XPathParser.XqTagContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        LinkedList<Node> children = visit(ctx.xq());
+        context = snapShot;
+        LinkedList<Node> result = new LinkedList<>();
+        Node resultNode = doc.createElement(ctx.tagName(0).getText());
+        for (Node child : children) {
+            // deep copy the child and append to the result node
+            Node copy = child.cloneNode(true);
+            resultNode.appendChild(copy);
+        }
+        result.add(resultNode);
+        return result;
+    }
+
+    @Override
+    public LinkedList<Node> visitXqForceLet(XPathParser.XqForceLetContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        for (int i = 0; i < ctx.forceLetClause().letBinding().size(); i++) {
+            String var = ctx.forceLetClause().letBinding(i).Var().getText();
+            HashMap<String, LinkedList<Node>> temp = new HashMap<>(context);
+            LinkedList<Node> value = visit(ctx.forceLetClause().letBinding(i).xq());
+            context = temp;
+            context.put(var, value);
+        }
+        LinkedList<Node> result = visit(ctx.xq());
+        context = snapShot;
+        return result;
+    }
+
+    @Override
+    public LinkedList<Node> visitXqFLWR(XPathParser.XqFLWRContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        LinkedList<Node> result = new LinkedList<>();
+
+        // for clause
+        LinkedList<HashMap<String, LinkedList<Node>>> forClauseRes = new LinkedList<HashMap<String, LinkedList<Node>>>();
+        visitforClauseList(ctx.forClause().varBinding(), 0, forClauseRes);
+    
+        for (HashMap<String, LinkedList<Node>> tempContext : forClauseRes) {
+            context = tempContext;
+            // let clause
+            if (ctx.letClause() != null) {            
+                for (int i = 0; i < ctx.letClause().letBinding().size(); i++) {
+                    String var = ctx.letClause().letBinding(i).Var().getText();
+                    HashMap<String, LinkedList<Node>> temp = new HashMap<>(context);
+                    LinkedList<Node> value = visit(ctx.letClause().letBinding(i).xq());
+                    context = temp;
+                    context.put(var, value);
+                }
+            }
+            // where clause
+            HashMap<String, LinkedList<Node>> snapShotWhere = new HashMap<>(context);
+
+            Boolean whereResSnapShot = curCondRes;
+            visit(ctx.whereClause().cond());
+            context = snapShotWhere;
+            if (curCondRes) {
+                // return clause
+                HashMap<String, LinkedList<Node>> snapShotReturn = new HashMap<>(context);
+                result.addAll(visit(ctx.returnClause().xq()));
+                context = snapShotReturn;
+            }
+            curCondRes = whereResSnapShot;
+        }
+        context = snapShot;
+        return result;
+    }
+
+    // cond
+    @Override
+    public LinkedList<Node> visitCondEqSign(XPathParser.CondEqSignContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        LinkedList<Node> result1 = visit(ctx.xq(0));
+        context = snapShot;
+        LinkedList<Node> result2 = visit(ctx.xq(1));
+        context = snapShot;
+        Boolean isEqual = false;
+        for (Node left : result1) {
+            if (isEqual) {
+                break;
+            }
+            for (Node right : result2) {
+                if (left.isEqualNode(right)) {
+                    isEqual = true;
+                    break;
+                }
+            }
+        }
+        if (isEqual) {
+            curCondRes = true;
+        }
+        else {
+            curCondRes = false;
+        }
+        return new LinkedList<>();
+    }
+
+    @Override
+    public LinkedList<Node> visitCondEQ(XPathParser.CondEQContext ctx) {
+        // the same as eq sign
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        LinkedList<Node> result1 = visit(ctx.xq(0));
+        context = snapShot;
+        LinkedList<Node> result2 = visit(ctx.xq(1));
+        context = snapShot;
+        Boolean isEqual = false;
+        for (Node left : result1) {
+            if (isEqual) {
+                break;
+            }
+            for (Node right : result2) {
+                if (left.isEqualNode(right)) {
+                    isEqual = true;
+                    break;
+                }
+            }
+        }
+        if (isEqual) {
+            curCondRes = true;
+        } else {
+            curCondRes = false;
+        }
+        return new LinkedList<>();
+    }
+
+    @Override
+    public LinkedList<Node> visitCondDoubleEqual(XPathParser.CondDoubleEqualContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        LinkedList<Node> result1 = visit(ctx.xq(0));
+        context = snapShot;
+        LinkedList<Node> result2 = visit(ctx.xq(1));
+        context = snapShot;
+        Boolean isSame = false;
+        for (Node left : result1) {
+            if (isSame) {
+                break;
+            }
+            for (Node right : result2) {
+                if (left.isSameNode(right)) {
+                    isSame = true;
+                    break;
+                }
+            }
+        }
+        if (isSame) {
+            curCondRes = true;
+        } else {
+            curCondRes = false;
+        }
+        return new LinkedList<>();
+    }
+
+    @Override
+    public LinkedList<Node> visitCondIs(XPathParser.CondIsContext ctx) {
+        // the same as double equal
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        LinkedList<Node> result1 = visit(ctx.xq(0));
+        context = snapShot;
+        LinkedList<Node> result2 = visit(ctx.xq(1));
+        context = snapShot;
+        Boolean isSame = false;
+        for (Node left : result1) {
+            if (isSame) {
+                break;
+            }
+            for (Node right : result2) {
+                if (left.isSameNode(right)) {
+                    isSame = true;
+                    break;
+                }
+            }
+        }
+        if (isSame) {
+            curCondRes = true;
+        } else {
+            curCondRes = false;
+        }
+        return new LinkedList<>();
+    }
+
+    @Override
+    public LinkedList<Node> visitCondEmpty(XPathParser.CondEmptyContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        LinkedList<Node> result = visit(ctx.xq());
+        context = snapShot;
+        if (result.size() == 0) {
+            curCondRes = true;
+        } else {
+            curCondRes = false;
+        }
+        return new LinkedList<>();
+    }
+
+    @Override
+    public LinkedList<Node> visitCondSome(XPathParser.CondSomeContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        // some clause list
+        LinkedList<HashMap<String, LinkedList<Node>>> someClauseRes = new LinkedList<HashMap<String, LinkedList<Node>>>();
+        visitSomeClauseList(ctx.varInXQ(), 0, someClauseRes);
+        Boolean someRes = false;
+        for (HashMap<String, LinkedList<Node>> tempContext : someClauseRes) {
+            context = tempContext;
+            HashMap<String, LinkedList<Node>> snapShotWhere = new HashMap<>(context);
+            visit(ctx.cond());
+            context = snapShotWhere;
+            if (curCondRes) {
+                someRes = true;
+                break;
+            }
+        }
+        context = snapShot;
+        if (someRes) {
+            curCondRes = true;
+        } else {
+            curCondRes = false;
+        }
+        return new LinkedList<>();
+    }
+
+    @Override
+    public LinkedList<Node> visitCondParenthesized(XPathParser.CondParenthesizedContext ctx) {
+        visit(ctx.cond());
+        return new LinkedList<>();
+    }
+
+    @Override
+    public LinkedList<Node> visitCondAND(XPathParser.CondANDContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        visit(ctx.cond(0));
+        Boolean res1 = curCondRes;
+        context = snapShot;
+        visit(ctx.cond(1));
+        Boolean res2 = curCondRes;
+        context = snapShot;
+        if (res1 && res2) {
+            curCondRes = true;
+        } else {
+            curCondRes = false;
+        }
+        return new LinkedList<>();
+    }
+
+    @Override
+    public LinkedList<Node> visitCondOR(XPathParser.CondORContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        visit(ctx.cond(0));
+        Boolean res1 = curCondRes;
+        context = snapShot;
+        visit(ctx.cond(1));
+        Boolean res2 = curCondRes;
+        context = snapShot;
+        if (res1 || res2) {
+            curCondRes = true;
+        } else {
+            curCondRes = false;
+        }
+        return new LinkedList<>();
+    }
+
+    @Override
+    public LinkedList<Node> visitCondNOT(XPathParser.CondNOTContext ctx) {
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        visit(ctx.cond());
+        Boolean res = curCondRes;
+        context = snapShot;
+        if (!res) {
+            curCondRes = true;
+        } else {
+            curCondRes = false;
+        }
+        return new LinkedList<>();
     }
 
     // ap
@@ -46,6 +408,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
                 doc.getDocumentElement().normalize();
 
                 // initialize the result list
+                tempResult.clear();
                 tempResult.add(doc);
 
                 LinkedList<Node> result = new LinkedList<>();
@@ -115,6 +478,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
                 doc.getDocumentElement().normalize();
 
                 // initialize the result list
+                tempResult.clear();
                 tempResult.add(doc);
 
                 // [rp] means applying rp to current node
@@ -528,24 +892,47 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
     }
 
     // helper function
-    // private LinkedList<Node> getAllDescendants(LinkedList<Node> nodes) {
-    // if (nodes.size() == 0) {
-    // return new LinkedList<>();
-    // }
 
-    // // get descendants by level
-    // LinkedList<Node> descendants = new LinkedList<>();
-    // LinkedList<Node> children = new LinkedList<>();
-    // for (Node node : nodes) {
-    // descendants.add(node);
-    // if (node.hasChildNodes()) {
-    // int childCount = node.getChildNodes().getLength();
-    // for (int i = 0; i < childCount; i++) {
-    // children.add(node.getChildNodes().item(i));
-    // }
-    // }
-    // }
-    // descendants.addAll(getAllDescendants(children));
-    // return descendants;
-    // }
+    // dive into the forclause, use backtracking to get all the results
+    private void visitforClauseList(List<XPathParser.VarBindingContext> varBindings, int index, LinkedList<HashMap<String, LinkedList<Node>>> result) {
+        if (index == varBindings.size()) {
+            result.add(new HashMap<>(context));
+            return;
+        }
+        String var = varBindings.get(index).Var().getText();
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        LinkedList<Node> value = visit(varBindings.get(index).xq());
+        context = snapShot;
+        for (Node node : value) {
+            HashMap<String, LinkedList<Node>> temp = new HashMap<>(context);
+            LinkedList<Node> item = new LinkedList<>();
+            item.add(node);
+            context.put(var, item);
+            visitforClauseList(varBindings, index + 1, result);
+            context = temp;
+        }
+        context = snapShot;
+    }
+
+    private void visitSomeClauseList(List<XPathParser.VarInXQContext> varBindings, int index,
+            LinkedList<HashMap<String, LinkedList<Node>>> result) {
+        if (index == varBindings.size()) {
+            result.add(new HashMap<>(context));
+            return;
+        }
+        String var = varBindings.get(index).Var().getText();
+        HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
+        LinkedList<Node> value = visit(varBindings.get(index).xq());
+        context = snapShot;
+        for (Node node : value) {
+            HashMap<String, LinkedList<Node>> temp = new HashMap<>(context);
+            LinkedList<Node> item = new LinkedList<>();
+            item.add(node);
+            context.put(var, item);
+            visitSomeClauseList(varBindings, index + 1, result);
+            context = temp;
+        }
+        context = snapShot;
+    }
+    
 }

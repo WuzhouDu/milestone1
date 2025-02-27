@@ -1,16 +1,17 @@
 grammar XPath;
 
 xq:
-	Var
-	| STRING
-	| ap
-	| L_PAREN xq R_PAREN
-	| xq ',' xq
-	| xq SLASH rp
-	| xq DOUBLE_SLASH rp
-	| '<' open = tagName '>' '{' xq '}' '</' close = tagName '>' { $open.text.equals($close.text) }?
-	| forClause letClause whereClause returnClause
-	| forceLetClause xq;
+	Var																									# XqVar
+	| STRING																							# XqString
+	| ap																								# XqAp
+	| L_PAREN xq R_PAREN																				# XqParenthesized
+	| xq ',' xq																							# XqComma
+	| xq SLASH rp																						# XqSlash
+	| xq DOUBLE_SLASH rp																				# XqDoubleSlash
+	| '<' open = tagName '>' '{' xq '}' '</' close = tagName '>' { $open.text.equals($close.text) }?	
+		# XqTag
+	| forClause letClause whereClause returnClause	# XqFLWR
+	| forceLetClause xq								# XqForceLet;
 
 forClause: FOR varBinding (',' varBinding)*;
 letClause: (LET letBinding (',' letBinding)*)?;
@@ -35,16 +36,16 @@ EQ: 'eq';
 IS: 'is';
 
 cond:
-	xq '=' xq
-	| xq EQ xq
-	| xq '==' xq
-	| xq IS xq
-	| EMPTY L_PAREN xq R_PAREN
-	| SOME varInXQ (',' varInXQ)* SATISFIES cond
-	| L_PAREN cond R_PAREN
-	| cond AND cond
-	| cond OR cond
-	| NOT cond;
+	xq '=' xq										# condEqSign
+	| xq EQ xq										# condEQ
+	| xq '==' xq									# condDoubleEqual
+	| xq IS xq										# condIs
+	| EMPTY L_PAREN xq R_PAREN						# condEmpty
+	| SOME varInXQ (',' varInXQ)* SATISFIES cond	# condSome
+	| L_PAREN cond R_PAREN							# condParenthesized
+	| cond AND cond									# condAND
+	| cond OR cond									# condOR
+	| NOT cond										# condNOT;
 
 varInXQ: Var IN xq;
 
@@ -80,7 +81,7 @@ f:
 tagName: ID;
 attName: ID;
 
-DOC: 'doc' |'document';
+DOC: 'doc' | 'document';
 L_PAREN: '(';
 R_PAREN: ')';
 SLASH: '/';

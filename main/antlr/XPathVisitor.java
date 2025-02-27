@@ -12,12 +12,94 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface XPathVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link XPathParser#xq}.
+	 * Visit a parse tree produced by the {@code XqComma}
+	 * labeled alternative in {@link XPathParser#xq}.
 	 * 
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitXq(XPathParser.XqContext ctx);
+	T visitXqComma(XPathParser.XqCommaContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code XqAp}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitXqAp(XPathParser.XqApContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code XqVar}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitXqVar(XPathParser.XqVarContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code XqDoubleSlash}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitXqDoubleSlash(XPathParser.XqDoubleSlashContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code XqSlash}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitXqSlash(XPathParser.XqSlashContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code XqFLWR}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitXqFLWR(XPathParser.XqFLWRContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code XqString}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitXqString(XPathParser.XqStringContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code XqTag}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitXqTag(XPathParser.XqTagContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code XqForceLet}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitXqForceLet(XPathParser.XqForceLetContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code XqParenthesized}
+	 * labeled alternative in {@link XPathParser#xq}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitXqParenthesized(XPathParser.XqParenthesizedContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link XPathParser#forClause}.
@@ -76,12 +158,94 @@ public interface XPathVisitor<T> extends ParseTreeVisitor<T> {
 	T visitLetBinding(XPathParser.LetBindingContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link XPathParser#cond}.
+	 * Visit a parse tree produced by the {@code condEmpty}
+	 * labeled alternative in {@link XPathParser#cond}.
 	 * 
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCond(XPathParser.CondContext ctx);
+	T visitCondEmpty(XPathParser.CondEmptyContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code condEQ}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondEQ(XPathParser.CondEQContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code condDoubleEqual}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondDoubleEqual(XPathParser.CondDoubleEqualContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code condIs}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondIs(XPathParser.CondIsContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code condSome}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondSome(XPathParser.CondSomeContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code condEqSign}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondEqSign(XPathParser.CondEqSignContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code condAND}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondAND(XPathParser.CondANDContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code condOR}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondOR(XPathParser.CondORContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code condNOT}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondNOT(XPathParser.CondNOTContext ctx);
+
+	/**
+	 * Visit a parse tree produced by the {@code condParenthesized}
+	 * labeled alternative in {@link XPathParser#cond}.
+	 * 
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondParenthesized(XPathParser.CondParenthesizedContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link XPathParser#varInXQ}.
