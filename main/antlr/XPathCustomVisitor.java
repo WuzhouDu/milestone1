@@ -396,7 +396,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         xmlName = xmlName.substring(1, xmlName.length() - 1);
 
         // verify file name is correct
-        if (!xmlName.equals(fileName)) {
+        if (!fileName.endsWith(xmlName)) {
             throw new RuntimeException(
                     "File name is not consistent in query and argument! query: " + xmlName + ", argument: " + fileName);
         }
@@ -407,7 +407,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         try {
             builder = factory.newDocumentBuilder();
             try {
-                doc = (Document) builder.parse(new File(xmlName));
+                doc = (Document) builder.parse(new File(fileName));
                 doc.getDocumentElement().normalize();
 
                 // initialize the result list
@@ -462,7 +462,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         xmlName = xmlName.substring(1, xmlName.length() - 1);
 
         // verify file name is correct
-        if (!xmlName.equals(fileName)) {
+        if (!fileName.endsWith(xmlName)) {
             throw new RuntimeException(
                     "File name is not consistent in query and argument! query: " + xmlName + ", argument: " + fileName);
         }
@@ -473,7 +473,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         try {
             builder = factory.newDocumentBuilder();
             try {
-                doc = (Document) builder.parse(new File(xmlName));
+                doc = (Document) builder.parse(new File(fileName));
                 doc.getDocumentElement().normalize();
 
                 // initialize the result list

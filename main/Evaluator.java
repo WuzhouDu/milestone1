@@ -54,8 +54,16 @@ public class Evaluator {
             Node importedNode = result.importNode(node, true);
             root.appendChild(importedNode);
         }
-        result.appendChild(root);
-
+        // if the result node is only one, we can use it as the root. otherwise, wrap result nodes with a root node
+        if (resultNodes.size() == 1) {
+            // import the node to the result document
+            Node importedNode = result.importNode(resultNodes.get(0), true);
+            result.appendChild(importedNode);
+        }
+        else {
+            result.appendChild(root);
+        }
+        
         return result;
     }
 
