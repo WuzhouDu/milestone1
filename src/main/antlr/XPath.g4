@@ -1,5 +1,9 @@
 grammar XPath;
 
+@header {
+	package main.antlr;
+}
+
 xq:
 	Var																									# XqVar
 	| STRING																							# XqString
