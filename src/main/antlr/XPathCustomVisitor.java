@@ -1,9 +1,10 @@
-package antlr;
+package main.antlr;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -431,19 +432,8 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
                     queue = children;
                     tempResult = queue;
                 }
-                tempResult = result;
+                tempResult = new LinkedList<>((new LinkedHashSet<>(result)));
                 return tempResult;
-
-                // // [.//rp] means applying rp to current node and all descendants
-                // LinkedList<Node> descendants = getAllDescendants(tempResult);
-                // tempResult.addAll(descendants);
-
-                // visit(ctx.rp());
-
-                // // elimitae the repeated nodes
-                // tempResult = new LinkedList<>(new HashSet<>(tempResult));
-
-                // return tempResult;
             } catch (SAXException | IOException e) {
                 e.printStackTrace();
             }
@@ -484,7 +474,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
                 visit(ctx.rp());
 
                 // elimitae the repeated nodes
-                tempResult = new LinkedList<>(new HashSet<>(tempResult));
+                tempResult = new LinkedList<>(new LinkedHashSet<>(tempResult));
 
                 return tempResult;
             } catch (SAXException | IOException e) {
@@ -594,6 +584,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         LinkedList<Node> result = visit(ctx.rp(0));
         tempResult = result;
         visit(ctx.rp(1));
+        tempResult = new LinkedList<>(new LinkedHashSet<>(tempResult));
         return tempResult;
     }
 
@@ -606,11 +597,11 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         // return tempResult;
         // use bfs to get results
         LinkedList<Node> result = new LinkedList<>();
-        LinkedList<Node> queue = new LinkedList<>(new HashSet<>(tempResult));
+        LinkedList<Node> queue = new LinkedList<>(new LinkedHashSet<>(tempResult));
         while (!queue.isEmpty()) {
             visit(ctx.rp(1));
             result.addAll(tempResult);
-            result = new LinkedList<>(new HashSet<>(result));
+            result = new LinkedList<>(new LinkedHashSet<>(result));
             LinkedList<Node> children = new LinkedList<>();
             for (Node node : queue) {
                 int childCount = node.getChildNodes().getLength();
@@ -623,6 +614,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
             tempResult = queue;
         }
         tempResult = result;
+        tempResult = new LinkedList<>(new LinkedHashSet<>(tempResult));
         return tempResult;
     }
 
@@ -856,7 +848,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         LinkedList<Node> result2 = visit(ctx.f(1));
         result1.addAll(result2);
         // eliminate the repeated nodes
-        tempResult = new LinkedList<>(new HashSet<>(result1));
+        tempResult = new LinkedList<>(new LinkedHashSet<>(result1));
         return tempResult;
     }
 

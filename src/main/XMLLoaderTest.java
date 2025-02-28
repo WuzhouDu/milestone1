@@ -1,3 +1,5 @@
+package main;
+
 import org.w3c.dom.*;
 
 public class XMLLoaderTest {
