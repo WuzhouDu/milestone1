@@ -79,7 +79,8 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         visit(ctx.rp());
 
         // eliminate the repeated nodes
-        tempResult = new LinkedList<>(new HashSet<>(tempResult));
+        tempResult = new LinkedList<>(new LinkedHashSet<>(tempResult));
+        // tempResult = new LinkedList<>(new HashSet<>(tempResult));
         return tempResult;
     }
 
@@ -87,14 +88,16 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
     public LinkedList<Node> visitXqDoubleSlash(XPathParser.XqDoubleSlashContext ctx) {
         HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
         LinkedList<Node> result = visit(ctx.xq());
-        tempResult = new LinkedList<>(new HashSet<>(result));
+        tempResult = new LinkedList<>(new LinkedHashSet<>(result));
+        // tempResult = new LinkedList<>(new HashSet<>(result));
         result = new LinkedList<>();
         context = snapShot;
         LinkedList<Node> queue = tempResult;
         while (!queue.isEmpty()) {
             visit(ctx.rp());
             result.addAll(tempResult);
-            result = new LinkedList<>(new HashSet<>(result));
+            //result = new LinkedList<>(new HashSet<>(result));
+            result = new LinkedList<>(new LinkedHashSet<>(result));
             LinkedList<Node> children = new LinkedList<>();
             for (Node node : queue) {
                 int childCount = node.getChildNodes().getLength();
@@ -433,6 +436,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
                     tempResult = queue;
                 }
                 tempResult = new LinkedList<>((new LinkedHashSet<>(result)));
+                // tempResult = new LinkedList<>(new HashSet<>(result));
                 return tempResult;
             } catch (SAXException | IOException e) {
                 e.printStackTrace();
@@ -475,7 +479,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
 
                 // elimitae the repeated nodes
                 tempResult = new LinkedList<>(new LinkedHashSet<>(tempResult));
-
+                // tempResult = new LinkedList<>(new HashSet<>(tempResult));
                 return tempResult;
             } catch (SAXException | IOException e) {
                 e.printStackTrace();
@@ -585,6 +589,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         tempResult = result;
         visit(ctx.rp(1));
         tempResult = new LinkedList<>(new LinkedHashSet<>(tempResult));
+        // tempResult = new LinkedList<>(new HashSet<>(tempResult));
         return tempResult;
     }
 
@@ -598,10 +603,12 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         // use bfs to get results
         LinkedList<Node> result = new LinkedList<>();
         LinkedList<Node> queue = new LinkedList<>(new LinkedHashSet<>(tempResult));
+        // LinkedList<Node> queue = new LinkedList<>(new HashSet<>(tempResult));
         while (!queue.isEmpty()) {
             visit(ctx.rp(1));
             result.addAll(tempResult);
             result = new LinkedList<>(new LinkedHashSet<>(result));
+            // result = new LinkedList<>(new HashSet<>(result));
             LinkedList<Node> children = new LinkedList<>();
             for (Node node : queue) {
                 int childCount = node.getChildNodes().getLength();
@@ -615,6 +622,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         }
         tempResult = result;
         tempResult = new LinkedList<>(new LinkedHashSet<>(tempResult));
+        // tempResult = new LinkedList<>(new HashSet<>(tempResult));
         return tempResult;
     }
 
@@ -849,6 +857,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         result1.addAll(result2);
         // eliminate the repeated nodes
         tempResult = new LinkedList<>(new LinkedHashSet<>(result1));
+        // tempResult = new LinkedList<>(new HashSet<>(result1));
         return tempResult;
     }
 
