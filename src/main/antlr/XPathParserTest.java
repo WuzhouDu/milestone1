@@ -31,6 +31,7 @@ public class XPathParserTest {
         String input = "";
         while (scanner.hasNextLine()) {
             input += scanner.nextLine();
+            input += "\n";
         }
         scanner.close();
 

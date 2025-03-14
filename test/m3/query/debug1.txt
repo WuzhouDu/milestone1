@@ -1,0 +1,6 @@
+<result>{
+for $s in doc("j_caesar.xml")//SPEAKER,
+    $stxt in $s/text()
+where $stxt = "CAESAR"
+return $s 
+}</result>

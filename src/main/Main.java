@@ -32,6 +32,7 @@ public class Main {
             String query = "";
             while (scanner.hasNextLine()) {
                 query += scanner.nextLine();
+                query += "\n";
             }
             scanner.close();
             // String query = "<result>{\n" + //

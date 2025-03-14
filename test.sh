@@ -18,3 +18,4 @@ do
         java -cp "classes:$ANTLR_JAR" main.Main $input_file $query_file $output_file
     done
 done
+

@@ -354,6 +354,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         context = snapShot;
         if (res1 && res2) {
             curCondRes = true;
+            System.out.println("true");
         } else {
             curCondRes = false;
         }
@@ -415,7 +416,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
                 doc.getDocumentElement().normalize();
 
                 // initialize the result list
-                tempResult.clear();
+                tempResult = new LinkedList<>();
                 tempResult.add(doc);
 
                 LinkedList<Node> result = new LinkedList<>();
@@ -424,6 +425,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
                 while (!queue.isEmpty()) {
                     visit(ctx.rp());
                     result.addAll(tempResult);
+                    result = new LinkedList<>(new LinkedHashSet<>(result));
                     LinkedList<Node> children = new LinkedList<>();
                     for (Node node : queue) {
                         int childCount = node.getChildNodes().getLength();
@@ -471,7 +473,7 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
                 doc.getDocumentElement().normalize();
 
                 // initialize the result list
-                tempResult.clear();
+                tempResult = new LinkedList<>();
                 tempResult.add(doc);
 
                 // [rp] means applying rp to current node
@@ -882,8 +884,33 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         String var = varBindings.get(index).Var().getText();
         HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
         LinkedList<Node> value = visit(varBindings.get(index).xq());
+        // System.out.println("var: " + var);
+        // System.out.println("initial values: ");
+        // for (Node node : value) {
+        //     System.out.println(node.getTextContent());
+        // }
+        // System.out.println("context: ");
+        // for (String key : context.keySet()) {
+        //     System.out.println(key);
+        //     for (Node node : context.get(key)) {
+        //         System.out.println(node.getTextContent());
+        //     }
+        // }
+        // System.out.println("--------------------------------------");
+        // if (varBindings.get(index).xq().getText().equals("$s/text()")) {
+        //     for (Node node : value) {
+        //         System.out.println(node.getTextContent());
+        //     }
+        // }
         context = snapShot;
+        if (value == null) {
+            return;
+        }
+        // if (index == 0) {
+        //     System.out.println("Value size before loop: " + value.size());
+        // }
         for (Node node : value) {
+            // System.out.println("index: " + index);
             HashMap<String, LinkedList<Node>> temp = new HashMap<>(context);
             LinkedList<Node> item = new LinkedList<>();
             item.add(node);
@@ -904,6 +931,9 @@ public class XPathCustomVisitor extends XPathBaseVisitor<LinkedList<Node>> {
         HashMap<String, LinkedList<Node>> snapShot = new HashMap<>(context);
         LinkedList<Node> value = visit(varBindings.get(index).xq());
         context = snapShot;
+        if (value == null) {
+            return;
+        }
         for (Node node : value) {
             HashMap<String, LinkedList<Node>> temp = new HashMap<>(context);
             LinkedList<Node> item = new LinkedList<>();

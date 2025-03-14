@@ -1,0 +1,6 @@
+<result>{
+for $a in doc("j_caesar.xml")//ACT,
+    $sp in $a//SPEAKER,
+    $stxt in $sp/text()
+return $sp
+}</result>
